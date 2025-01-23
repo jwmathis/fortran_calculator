@@ -5,8 +5,7 @@ module calc_module
     type complex_number
         real(kind=4) :: real, imag
     end type complex_number
-    integer :: n
-
+    integer :: z
     contains
 
         ! Add two numbers
@@ -46,16 +45,19 @@ module calc_module
         function pow(a, b) result(c)
             type(complex_number) :: a, c
             integer :: b
-            c%real = 1 ! Set real part to 1
-            c%imag = 0 ! Set imaginary part to 0
+            c = a
 
             if (b == 0) then ! If b is 0, return 1
                 c%real = 1
                 c%imag = 0
                 return
+            else if (b == 1) then ! If b is 1, return the original number
+                return
             end if
-            ! If b is not 0, raise the number to the power of b
-            do n = 1, b ! Raise the number to the power of b
+
+
+            ! If b is not 0 or 1, raise the number to the power of b
+            do z = 1, (b-1) ! Raise the number to the power of b
                 c = mul(c, a) ! Multiply the current result by the original number
             end do
         end function pow
@@ -66,30 +68,4 @@ module calc_module
             c%real = a%real
             c%imag = -a%imag
         end function conj
-
-        subroutine parse_complex_number(input, a)
-            character(len=*), intent(in):: input
-            type(complex_number) :: a
-            integer :: position_plus, position_i
-            real(kind=8) :: real_part, imag_part
-
-            ! Find the position of the plus sign
-            position_plus = index(input, "+")
-            ! Find the position of the i
-            position_i = index(input, "i")
-            
-            if (position_plus > 0 .and. position_i > 0) then 
-                ! Get the real and imaginary parts
-                read(input(1:position_plus - 1), *) real_part
-                read(input(position_plus + 1:position_i - 1), *) imag_part
-
-                a%real = real_part
-                a%imag = imag_part
-
-            else
-                print *, "Invalid input"
-                stop
-            end if
-        end subroutine parse_complex_number
-
 end module calc_module
