@@ -42,6 +42,7 @@ module calc_module
         end function div
 
         ! Raise a number to a power
+        ! Add code to raise a number to a negative power
         function pow(a, b) result(c)
             type(complex_number) :: a, c
             integer :: b

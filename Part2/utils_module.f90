@@ -2,9 +2,10 @@ module utils_module
     use calc_module
     implicit none
 
+    logical :: valid_input
     contains
 
-        ! Print the menu
+        ! Print the Operations Menu
         subroutine print_menu()
             print *, "Complex Number Calculator"
             print *, "-------------------------"
@@ -25,9 +26,10 @@ module utils_module
             print *, "3. real"
         end subroutine print_format_menu
 
-        ! Parse complex number
-        subroutine parse_complex_number(input, a)
+        ! Parse complex number for the form real + imag*i returns true if the input is valid
+        function parse_complex_number(input, a) result(valid_input)
             character(len=*), intent(in):: input
+            logical :: valid_input
             type(complex_number) :: a
             integer :: position_plus, position_i
             real(kind=8) :: real_part, imag_part
@@ -37,19 +39,22 @@ module utils_module
             ! Find the position of the i
             position_i = index(input, "i")
 
+            ! Check if the input is valid format
             if (position_plus > 0 .and. position_i > 0) then 
                 ! Get the real and imaginary parts
                 read(input(1:position_plus - 1), *) real_part
                 read(input(position_plus + 1:position_i - 1), *) imag_part
-
+                ! Assign the complex number
                 a%real = real_part
                 a%imag = imag_part
-
+                ! Return true
+                valid_input = .true.
             else
-                print *, "Invalid input"
-                stop
+                ! Return false
+                print *, "Invalid input. Enter the complex number in the form real + imag*i"
+                valid_input = .false.
             end if
-        end subroutine parse_complex_number
+        end function parse_complex_number
 
         ! Get formatted input
         subroutine get_formatted_input(n, j, a, b, x)
@@ -57,15 +62,15 @@ module utils_module
             integer, intent(in) :: n, j
             type(complex_number), intent(out) :: a, b
             integer, intent(out), optional :: x
-        
             character(len=50) :: user_input
         
+            ! Get user input
             select case (n)
                 case (1)
                     ! Get user input in the form (real, imag)
                     print *, "Enter the first complex number in the form (real, imag): "
                     read(*, "(F8.3, F8.3)") a%real, a%imag
-                    if (j == 5) then
+                    if (j == 5) then ! If the user wants to enter the power
                         print *, "Enter the power of the complex number: "
                         read(*, *) x
                     else
@@ -75,24 +80,35 @@ module utils_module
         
                 case (2)
                     ! Get user input in the form real + imag*i
-                    if (j == 5) then
-                        print *, "Enter the complex number in the form real + imag*i: "
-                        read(*, '(A)') user_input
-                        call parse_complex_number(user_input, a)
+                    valid_input = .false. ! Reset valid_input
+                    if (j == 5) then ! If the user wants to enter the power
+                        do while (.not. valid_input)
+                            print *, "Enter the complex number in the form real + imag*i: "
+                            read(*, '(A)') user_input
+                            valid_input = parse_complex_number(user_input, a)
+                        end do
                         print *, "Enter the power of the complex number: "
                         read(*, *) x
                     else
-                        print *, "Enter the first complex number in the form real + imag*i: "
-                        read(*, '(A)') user_input
-                        call parse_complex_number(user_input, a)
-                        print *, "Enter the second complex number in the form real + imag*i: "
-                        read(*, '(A)') user_input
-                        call parse_complex_number(user_input, b)
+                        do while (.not. valid_input) ! Loop until the input is valid
+                            print *, "Enter the first complex number in the form real + imag*i: "
+                            read(*, '(A)') user_input
+                            valid_input = parse_complex_number(user_input, a) 
+                        end do
+
+                        valid_input = .false. ! Reset valid_input
+
+                        do while (.not. valid_input) ! Loop until the input is valid
+                            print *, "Enter the second complex number in the form real + imag*i: "
+                            read(*, '(A)') user_input
+                            valid_input = parse_complex_number(user_input, b)
+                        end do
+
                     end if
         
                 case (3)
                     ! Get user input in the form real
-                    if (j == 5) then
+                    if (j == 5) then ! If the user wants to enter the power
                         print *, "Enter the number: "
                         read(*, *) a%real
                         a%imag = 0.0
