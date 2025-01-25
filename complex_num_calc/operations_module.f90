@@ -1,4 +1,4 @@
-module calc_module
+module operations_module
     implicit none
 
     ! Define a complex number type
@@ -69,4 +69,4 @@ module calc_module
             c%real = a%real
             c%imag = -a%imag
         end function conj
-end module calc_module
+end module operations_module

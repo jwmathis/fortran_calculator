@@ -1,5 +1,5 @@
 module utils_module
-    use calc_module
+    use operations_module
     implicit none
 
     logical :: valid_input
@@ -31,19 +31,30 @@ module utils_module
             character(len=*), intent(in):: input
             logical :: valid_input
             type(complex_number) :: a
-            integer :: position_plus, position_i
+            integer :: position_plus, position_i, position_minus
             real(kind=8) :: real_part, imag_part
 
             ! Find the position of the plus sign
-            position_plus = index(input, "+")
+            position_plus = index(input, "+") ! Returns the position of the first plus sign
+            if (position_plus == 0) then
+                position_minus = index(input, "-", back=.true.) ! Returns the position of the negative sign
+            end if
             ! Find the position of the i
-            position_i = index(input, "i")
+            position_i = index(input, "i") ! Returns the position of the second plus sign
 
             ! Check if the input is valid format
             if (position_plus > 0 .and. position_i > 0) then 
                 ! Get the real and imaginary parts
                 read(input(1:position_plus - 1), *) real_part
                 read(input(position_plus + 1:position_i - 1), *) imag_part
+                ! Assign the complex number
+                a%real = real_part
+                a%imag = imag_part
+                ! Return true
+                valid_input = .true.
+            else if (position_minus > 0 .and. position_i > 0) then
+                read(input(1:position_minus - 1), *) real_part
+                read(input(position_minus:position_i - 1), *) imag_part
                 ! Assign the complex number
                 a%real = real_part
                 a%imag = imag_part
