@@ -12,13 +12,13 @@ TEST_EXE := complex_calculator.exe # Name of the executable
 
 all: $(TEST_EXE) # Define the default target
 
-$(TEST_EXE): $(OBJS) # Define the target
-	$(FC) -o $@ $^ # Compile the source files
+$(TEST_EXE): $(OBJS) # Define the target Compile the source files
+	$(FC) -o $@ $^
 
 
-$(OBJS): %.o: %.f90 # Define the rule for compiling source files
-	$(FC) -c -o $@ $< # Compile the source file
+$(OBJS): %.o: %.f90 # Define the rule for compiling source files # Compile the source file
+	$(FC) -c -o $@ $< 
 
 clean:
-	$(RM) $(wildcard *.o) $(TEST_EXE)
+	$(RM) $(wildcard *.o)
 	$(RM) *.mod
