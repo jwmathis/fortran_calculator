@@ -6,7 +6,6 @@ The calculator supports the basic arithmetic operations: addition, subtraction, 
 * Add, Subtract, Divide, Mulitply, and Exponentiate real numbers and complex numbers
 * Input numbers in mathematical complex number notation and rectangular (Cartesian) notation
 * Complex number output is formatted based on your input
-* 
 
 ## Build the Application
 Build the calculator from source:
@@ -16,19 +15,19 @@ This application requires Fortran compiler and Make build tool.
 
 ### Installation
 1. Clone the repository
-'''
+```
 git clone https://github.com/jwmathis/fortran_calculator.git
 cd complex_calculator
-'''
-2. Run make to compile the code
-'''
+```
+3. Run make to compile the code
+```
 make
-'''
-3. After the build finishes, you can run the executable
-'''
+```
+5. After the build finishes, you can run the executable
+```
 ./complex_calculator
-'''
-4. Clean up the folder
-'''
+```
+6. Clean up the folder
+```
 make clean
-'''
+```
