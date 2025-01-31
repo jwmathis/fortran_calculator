@@ -15,7 +15,8 @@ module utils_module
             print *, "3. Multiply"
             print *, "4. Divide"
             print *, "5. Power"
-            print *, "6. Exit"
+            print *, "6. Conjugate"
+            print *, "7. Exit"
         end subroutine print_menu
 
         ! Print format menu
@@ -74,7 +75,7 @@ module utils_module
             type(complex_number), intent(out) :: a, b
             integer, intent(out), optional :: x
             character(len=50) :: user_input
-        
+            
             ! Get user input
             select case (n)
                 case (1)
