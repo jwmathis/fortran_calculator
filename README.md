@@ -3,7 +3,7 @@ The complex number calculator is a command-line application implemented in Fortr
 The calculator supports the basic arithmetic operations: addition, subtraction, multiplication, and division. Users are able to input complex numbers in standard mathematical notation, rectangular (Cartesian) notation, or use it as a regular calculator for real numbers only. 
 
 ## Features
-* Add, Subtract, Divide, Mulitply, and Exponentiate real numbers and complex numbers
+* Add, Subtract, Divide, Mulitply, Exponentiate, and find the complex conjugate of real numbers and complex numbers
 * Input numbers in mathematical complex number notation and rectangular (Cartesian) notation
 * Complex number output is formatted based on your input
 
