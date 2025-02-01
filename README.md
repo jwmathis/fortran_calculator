@@ -19,15 +19,15 @@ This application requires Fortran compiler and Make build tool.
 git clone https://github.com/jwmathis/fortran_calculator.git
 cd complex_calculator
 ```
-3. Run make to compile the code
+2. Run make to compile the code
 ```
 make
 ```
-5. After the build finishes, you can run the executable
+3. After the build finishes, you can run the executable
 ```
 ./complex_calculator
 ```
-6. Clean up the folder
+4. Clean up the folder
 ```
 make clean
 ```
